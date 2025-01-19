@@ -13,6 +13,14 @@ typedef struct
 
 int main()
 {
+    FILE *inFile = fopen("C:\\Users\\caioo\\Projects\\INF006\\02\\L1Q2.in", "r");
+    FILE *outFile = fopen("C:\\Users\\caioo\\Projects\\INF006\\02\\L1Q2.out", "w");
+
+    if (!inFile || !outFile) {
+        printf("Erro ao abrir os arquivos.\n");
+        return 1;
+    }
+
     Pilha pilha;
     pilha.topo = 0;
     insercaoOrdenada(&pilha, "Walter");
