@@ -13,25 +13,31 @@ typedef struct
 
 int main()
 {
-    FILE *inFile = fopen("C:\\Users\\caioo\\Projects\\INF006\\02\\L1Q2.in", "r");
-    FILE *outFile = fopen("C:\\Users\\caioo\\Projects\\INF006\\02\\L1Q2.out", "w");
+    FILE *fp_in = fopen("C:\\Users\\caioo\\Projects\\INF006\\02\\L1Q2.in", "r");
+    FILE *fp_out = fopen("C:\\Users\\caioo\\Projects\\INF006\\02\\L1Q2.out", "w");
 
-    if (!inFile || !outFile) {
-        printf("Erro ao abrir os arquivos.\n");
-        return 1;
-    }
-
-    Pilha pilha;
-    pilha.topo = 0;
-    insercaoOrdenada(&pilha, "Walter");
-    insercaoOrdenada(&pilha, "Daniele");
-    insercaoOrdenada(&pilha, "Carla");
-    insercaoOrdenada(&pilha, "Antonia");
-    insercaoOrdenada(&pilha, "Bruno");
-    for (int i = 0; i < pilha.topo; i++)
+    if (fp_in == NULL || fp_out == NULL)
     {
-        printf("%s\n", pilha.elementos[i]);
+        printf("Erro ao abrir os arquivos.\n");
+        return EXIT_FAILURE;
     }
+
+
+    char linha[1000];
+    while (fgets(linha, sizeof(linha), fp_in))
+    {
+        char *novoElemento = strtok(linha, " \n");
+        Pilha pilha;
+        pilha.topo = 0;
+        while (novoElemento)
+        {
+            insercaoOrdenada(&pilha, novoElemento, fp_out);
+            novoElemento = strtok(NULL, " \n");
+        }
+        fprintf(fp_out, "\n");
+    }
+    fclose(fp_in);
+    fclose(fp_out);
     return 0;
 }
 
@@ -45,24 +51,33 @@ int isFull(Pilha *pilha)
     return pilha->topo == MAX;
 }
 
-void insercaoOrdenada(Pilha *pilha, char *novoElemento)
+void insercaoOrdenada(Pilha *pilha, char *novoElemento, FILE *fp_out)
 {
     Pilha temp;
     temp.topo = 0;
     char elemento[STR_MAX];
+    int popCount = 0;
 
     while (!isEmpty(pilha) && strcmp(pilha->elementos[pilha->topo - 1], novoElemento) > 0)
     {
         pop(pilha, elemento);
+        popCount++;
         push(&temp, elemento);
+    }
+    if (popCount > 0)
+    {
+        fprintf(fp_out, "%dx-pop ", popCount);
     }
 
     push(pilha, novoElemento);
+    fprintf(fp_out, "push-%s ", novoElemento);
 
     while (!isEmpty(&temp))
     {
         pop(&temp, elemento);
         push(pilha, elemento);
+
+        fprintf(fp_out, "push-%s ", elemento);
     }
 }
 
