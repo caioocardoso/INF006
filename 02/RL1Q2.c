@@ -13,8 +13,8 @@ typedef struct
 
 int main()
 {
-    FILE *fp_in = fopen("C:\\Users\\caioo\\Projects\\INF006\\02\\L1Q2.in", "r");
-    FILE *fp_out = fopen("C:\\Users\\caioo\\Projects\\INF006\\02\\L1Q2.out", "w");
+    FILE *fp_in = fopen("L1Q2.in",  "r");
+    FILE *fp_out = fopen("L1Q2.out", "w");
 
     if (fp_in == NULL || fp_out == NULL)
     {
