@@ -1,9 +1,9 @@
-//Dupla: Gabriel Nascimento Miranda Dos Santos (20241160019), Andrey Gomes Da Silva Nascimento (20241160024);
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct no{
+typedef struct no
+{
   int val;
   int height;
   int sum;
@@ -12,7 +12,8 @@ typedef struct no{
   struct no *parent;
 } No;
 
-int sumNodes(No *root){
+int sumNodes(No *root)
+{
   if(root != NULL){
     return root->val + sumNodes(root->left) + sumNodes(root->right);
   }else{
@@ -20,8 +21,8 @@ int sumNodes(No *root){
   }
 }
 
-int insert(No **root, int val){
-  // NO DUPLICATES
+int insert(No **root, int val)
+{
   No *new = (No*)malloc(sizeof(No));
   int height = 0;
   new->val = val;
@@ -66,7 +67,8 @@ int insert(No **root, int val){
   return 0;
 }
 
-void calculateDiferences(No *root){ // node->sum = sum(node->right) - sum(node->left)
+void calculateDiferences(No *root)
+{
   if(root != NULL){
     root->sum = sumNodes(root->right) - sumNodes(root->left);
     calculateDiferences(root->left);
@@ -74,7 +76,8 @@ void calculateDiferences(No *root){ // node->sum = sum(node->right) - sum(node->
   }
 }
 
-void writeInOrder(No *root, char *text, int *el){
+void writeInOrder(No *root, char *text, int *el)
+{
   if(root){
     writeInOrder(root->left, text, el);
     if(*el == 0){
@@ -87,7 +90,8 @@ void writeInOrder(No *root, char *text, int *el){
   }
 }
 
-int main(){
+int main()
+{
   FILE *fp_in = fopen("L2Q2.in", "r");
   FILE *fp_out = fopen("L2Q2.out", "w");
   char line[1000];
@@ -104,8 +108,9 @@ int main(){
     char text[1000];
     int el = 0;
 
-    line[strcspn(line, "\n")] = '\0'; // Remove o \n da linha lida
-    line[strcspn(line, "\r")] = '\0'; // Remove o \r da linha lida
+    line[strcspn(line, "\n")] = '\0'; 
+    
+    line[strcspn(line, "\r")] = '\0';
 
     char *slice = strtok(line, space);
 

@@ -1,9 +1,10 @@
-//Dupla: Gabriel Nascimento Miranda Dos Santos (20241160019), Andrey Gomes Da Silva Nascimento (20241160024);
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct no{
+
+typedef struct no
+{
   int val;
   int height;
   struct no *left;
@@ -11,7 +12,8 @@ typedef struct no{
   struct no *parent;
 } No;
 
-int insert(No **root, int val){
+int insert(No **root, int val)
+{
   No *new = (No*)malloc(sizeof(No));
   int height = 0;
   new->val = val;
@@ -52,7 +54,8 @@ int insert(No **root, int val){
   return 0;
 }
 
-No *maxNode(No *root){
+No *maxNode(No *root)
+{
   No *current = root;
   while(current->right != NULL){
     current = current->right;
@@ -77,8 +80,8 @@ int main(){
     No *root = NULL;
     char text[1000];
 
-    line[strcspn(line, "\n")] = '\0'; // Remove o \n da linha lida
-    line[strcspn(line, "\r")] = '\0'; // Remove o \r da linha lida
+    line[strcspn(line, "\n")] = '\0';
+    line[strcspn(line, "\r")] = '\0';
 
     char *slice = strtok(line, space);
 

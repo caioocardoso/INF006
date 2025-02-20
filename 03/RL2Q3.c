@@ -1,10 +1,9 @@
-//Dupla: Gabriel Nascimento Miranda Dos Santos (20241160019), Andrey Gomes Da Silva Nascimento (20241160024);
-//Dupla: Gabriel Nascimento Miranda Dos Santos (20241160019), Andrey Gomes Da Silva Nascimento (20241160024);
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct no{
+typedef struct no
+{
   int val;
   int height;
   struct no *left;
@@ -14,7 +13,8 @@ typedef struct no{
 
 void removeNo(No **root, int val);
 
-No *searchNo(No *root, int val){
+No *searchNo(No *root, int val)
+{
   No *current = root;
   while(current != NULL){
     if(val < current->val){
@@ -28,7 +28,8 @@ No *searchNo(No *root, int val){
   return NULL;
 }
 
-int insertNo(No **root, int val){
+int insertNo(No **root, int val)
+{
   No *new = (No*)malloc(sizeof(No));
   int height = 0;
   new->val = val;
@@ -37,12 +38,14 @@ int insertNo(No **root, int val){
   new->parent = NULL;
   new->height = height;
 
-  if(*root == NULL){
+  if(*root == NULL)
+  {
     *root = new;
   }else{
     No *current = *root;
     No *parent = NULL;
-    while(1){
+    while(1)
+    {
       parent = current;
       if(val < current->val){
         current = current->left;
@@ -69,7 +72,8 @@ int insertNo(No **root, int val){
   return 0;
 }
 
-void updateHeight(No *parent){ // update heights of subTree based on the height of the parent
+void updateHeight(No *parent)
+{
   if(parent != NULL){
     No *current = parent;
     while(current != NULL){
@@ -86,7 +90,8 @@ void updateHeight(No *parent){ // update heights of subTree based on the height 
   }
 }
 
-No *successorNode(No *leaf){
+No *successorNode(No *leaf)
+{
   No *current = leaf->right;
   while(current->left != NULL){
     current = current->left;
@@ -94,21 +99,23 @@ No *successorNode(No *leaf){
   return current;
 }
 
-void removeLeaf(No **root,No *leaf){
+void removeLeaf(No **root,No *leaf)
+{
   if(leaf->parent != NULL){
     if(leaf->parent->left == leaf){
       leaf->parent->left = NULL;
     }else{
       leaf->parent->right = NULL;
     }
-  }else{//root will be removed
+  }else{
     *root = NULL;
   }
   free(leaf);
 }
 
-void removeWOnlyChild(No **root, No *leaf){
-  if(leaf->parent == NULL){//root
+void removeWOnlyChild(No **root, No *leaf)
+{
+  if(leaf->parent == NULL){
     if(leaf->left != NULL){
       leaf->left->height = 0;
       *root = leaf->left;
@@ -142,7 +149,8 @@ void removeWOnlyChild(No **root, No *leaf){
   free(leaf);
 }
 
-void removeWTwoChildren(No **root, No *leaf){
+void removeWTwoChildren(No **root, No *leaf)
+{
   No *successor = successorNode(leaf);
   leaf->val = successor->val;
   updateHeight(leaf);
@@ -156,16 +164,17 @@ void removeNo(No **root, int val){
     return;
   }
 
-  if(current->left == NULL && current->right == NULL){ //No folha
+  if(current->left == NULL && current->right == NULL){
     removeLeaf(root, current);
-  }else if(current->left == NULL || current->right == NULL) {//No com apenas um filho
+  }else if(current->left == NULL || current->right == NULL) {
     removeWOnlyChild(root, current);
-  }else if(current->left != NULL && current->right != NULL){ //No com dois filhos
+  }else if(current->left != NULL && current->right != NULL){
     removeWTwoChildren(root, current);
   }
 }
 
-void writeInOrder(No *root, char *text, int *el){
+void writeInOrder(No *root, char *text, int *el)
+{
   if(root){
     writeInOrder(root->left, text, el);
     if(*el == 0){
@@ -179,7 +188,8 @@ void writeInOrder(No *root, char *text, int *el){
 }
 
 
-int main(){
+int main()
+{
   FILE *fp_in = fopen("L2Q3.in", "r");
   FILE *fp_out = fopen("L2Q3.out", "w");
   char line[1000];
@@ -191,13 +201,14 @@ int main(){
     return EXIT_FAILURE;
   }
 
-  while(fgets(line, sizeof(line), fp_in) != NULL){
+  while(fgets(line, sizeof(line), fp_in) != NULL)
+  {
     No *root = NULL;
     char text[1000];
     int el = 0;
 
-    line[strcspn(line, "\n")] = '\0'; // Remove o \n da linha lida
-    line[strcspn(line, "\r")] = '\0'; // Remove o \r da linha lida
+    line[strcspn(line, "\n")] = '\0';
+    line[strcspn(line, "\r")] = '\0';
 
     char *slice = strtok(line, space);
 
