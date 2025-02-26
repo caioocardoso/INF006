@@ -68,6 +68,24 @@ void listar(No *raiz){
     }
 }
 
+
+int buscar(No *raiz, int valor){
+    if(raiz == NULL)
+        return -1;
+
+    else{
+        if(raiz->valor == valor)
+            return valor;
+        else{
+            if(valor < raiz->valor)
+                return buscar(raiz->esquerda, valor);
+            else
+                return buscar(raiz->direita, valor);
+        }
+    }
+}
+
+
 void main()
 {
     No *raiz = NULL;
@@ -79,6 +97,7 @@ void main()
         printf("1 - Inserir\n");
         printf("2 - Listar\n");
         printf("3 - Remover\n");
+        printf("4 - busca\n");
         printf("-------------------------------\n");
         printf("\n");
         scanf("%d", &escolha);
@@ -86,32 +105,24 @@ void main()
         switch (escolha)
         {
         case 1:
-        {
             scanf("%d", &valor);
             raiz = inserir(raiz, valor);
             break;
-        }
         case 2:
-        {
             listar(raiz);
             printf("\n");
             break;
-        }
         case 3:
-        {
             scanf("%d", &valor);
             raiz = remover(raiz, valor);
             break;
-        }
         case 4:
-        {
+            scanf("%d", &valor);
+            printf("Achei: %d\n", buscar(raiz, valor));
             break;
-        }
         default:
-        {
             printf("Errou");
             break;
-        }
         }
     }
 }
